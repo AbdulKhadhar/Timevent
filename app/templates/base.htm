@@ -99,10 +99,15 @@ a { color: #fff; text-decoration :none;}
     <div class="pull-left"></div>
     <div class="pull-right">
       <ul class="nav-list">
-        <li><a href="/">Home</a></li>
-        <li><a href="/about">About</a> </li>
-        <li><a href="/display">Events</a></li>
-	<li><a href="/login">Login</a> </li>
+        <li><a href="{{ url_for('index') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a> </li>
+        
+	{% if current_user.is_anonymous %}
+	<li><a href="{{ url_for('login') }}">Login</a> </li>
+	{% else %}
+	<li><a href="{{ url_for('display') }}">Events</a></li>
+	<li><a href="{{ url_for('logout') }}">Logout</a> </li>
+	{% endif %}
       </ul>
     </div>
   </div>

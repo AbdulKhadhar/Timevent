@@ -6,11 +6,16 @@
 <div class="content-section">
 	<div class="container">
 		<div class="content-text">
-		<h1> Hello </h1>
-		<hr>
-			<p> {{ title }} <br>
-			{{ discription }} <br>
-			{{ date }} </p>
+		<h1>Hi, {{ current_user.username }}!</h1>
+	
+    		{% for post in posts %}
+   			<div class="events"><p>Events Saved by {{ post.author.username }}  
+			<p>{{ post.id }} <b>{{ post.body }}</b>
+			<p>{{ post.discription }}
+			<!--<p>{{ post.timestamp }}-->	
+			</div>
+    		{% endfor %}
+
 		</div>
 	<p> In this page we display the events added from the main page of <a href='/'>Timevent</a> </p>
 	</div>

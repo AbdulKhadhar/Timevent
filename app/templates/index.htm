@@ -4,7 +4,7 @@
 <div class="content-section">
 	<div class="container">
 		<div class="content-text">
-			<h1>Welome to Timevent</h1>
+			<h1>Hi, {{ current_user.username }}!</h1>
 
 			<form action="/display" method="post">
 			<p>
@@ -16,8 +16,8 @@
 			{{ form.Discription(size=32) }}
 			</p>
 			<p>
-			Date of Event<br>
-			{{ form.DateOfEvent(size=32) }}
+			<!--Date of Event<br>
+			{{ form.DateOfEvent(size=32) }}-->
 			</p>
 			<p><input type=submit value="Add Event"></input></form>
 		</div>

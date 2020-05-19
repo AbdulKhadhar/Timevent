@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, DateField, validators
-from wtforms.validators import DataRequired
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from app.models import User
 
 class LoginForm(FlaskForm):
 	username=StringField('Username',validators=[DataRequired()])
@@ -9,6 +10,25 @@ class LoginForm(FlaskForm):
 	submit = SubmitField('Sign In')
 
 class InputEvent(FlaskForm):
-	TitleOfEvent = StringField(label='Title of Event',validators=[DataRequired()])
-	Discription = StringField(label='Disription of Event',validators=[DataRequired()])
-	DateOfEvent = DateField(label='Date of Event',validators=[DataRequired()])
+	TitleOfEvent = StringField('Title of Event',validators=[DataRequired()])
+	Discription = StringField('Disription of Event',validators=[DataRequired()])
+	DateOfEvent = DateField('Date of Event',validators=[DataRequired()])
+	submit = SubmitField('Add Event')
+
+class RegistrationForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Register')
+
+    def validate_username(self, username):
+        user = User.query.filter_by(username=username.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different username.')
+
+    def validate_email(self, email):
+        user = User.query.filter_by(email=email.data).first()
+        if user is not None:
+            raise ValidationError('Please use a different email address.')
